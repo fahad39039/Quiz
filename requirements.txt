@@ -6,7 +6,6 @@ gunicorn==19.9.0
 itsdangerous==1.1.0
 Jinja2==2.10.1
 MarkupSafe==1.1.1
-mysql-connector-python==2.0.4
 mysqlclient==1.4.2.post1
 pycparser==2.19
 PyMySQL==0.9.3
