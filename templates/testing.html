@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Question</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <style type="text/css">
+  .inputGroup {
+    background-color: #fff;
+    display: block;
+    position: relative;
+  }
+  .inputGroup label {
+  padding: 12px 30px;
+  width: 100%;
+  display: block;
+  text-align: left;
+  color: #3C454C;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  transition: color 200ms ease-in;
+  overflow: hidden;
+}
+.inputGroup label:before {
+  width: 100%;
+  height: 10px;
+  border-radius: 50%;
+  content: '';
+  background-color: #5562eb;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%) scale3d(1, 1, 1);
+          transform: translate(-50%, -50%) scale3d(1, 1, 1);
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  z-index: -1;
+}
+.inputGroup label:after {
+  width: 32px;
+  height: 32px;
+  content: '';
+  border: 2px solid #D1D7DC;
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
+  background-repeat: no-repeat;
+  background-position: 2px 3px;
+  border-radius: 50%;
+  z-index: 2;
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  cursor: pointer;
+  transition: all 200ms ease-in;
+}
+.inputGroup input:checked ~ label {
+  color: #fff;
+}
+.inputGroup input:checked ~ label:before {
+  -webkit-transform: translate(-50%, -50%) scale3d(56, 56, 1);
+          transform: translate(-50%, -50%) scale3d(56, 56, 1);
+  opacity: 1;
+}
+.inputGroup input:checked ~ label:after {
+  background-color: #54E0C7;
+  border-color: #54E0C7;
+}
+.inputGroup input {
+  width: 32px;
+  height: 32px;
+  order: 1;
+  z-index: 2;
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  cursor: pointer;
+  visibility: hidden;
+}
+  .check-mark{
+  width: 32px;
+  height: 32px;
+  content: '';
+  border: 2px solid #D1D7DC;
+  background-color: limegreen;
+  background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
+  background-repeat: no-repeat;
+  background-position: 2px 3px;
+  margin: 0 auto;
+  border-radius: 50%;
+  z-index: 2;
+  }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-dark shadow-lg mb-5">
+      <a class="navbar-brand" href="#">Quiz App</a>
+  </nav>
+  <div class="container">
+  <!-- ko if: beforeSubmission -->
+    <div class="row col-md-12" style="margin-left: 20px;font: bold 24px Sans-Serif;color: hsl(0, 0%, 70%);"><span data-bind="text:'QUESTION '+(index_of_dict() + 1)+' OF '+myData().length"> </span></div>
+  <!-- /ko -->
+  <div class="row col-md-12" style="margin: 0px;">
+    <div class="col-md-12 col-sm-12">
+      <!-- ko ifnot: beforeSubmission -->
+      <ul class="list-group" id="ListScrollSpy" style="cursor: pointer;">
+        <li class="list-group-item list-group-item-action">
+          <p class="check-mark"></p>
+            <h4 class="d-flex justify-content-center">Quiz Completed!</h4>
+        </li>
+      </ul>
+      <!-- /ko -->
+    </div>
+    <div class="col-sm-12">
+      <div>
+        <div class="modal-content">
+          <div class="modal-header">
+            <div data-bind="visible:beforeSubmission">
+              <h3 class="font-weight-light"><button class="btn btn-warning rounded-circle mr-4" data-bind="text:index_of_dict() + 1, attr:{id:index_of_dict() + 1}"></button><span data-bind="text: myData()[index_of_dict()].question"></span></h3>
+            </div>
+            <div data-bind="visible: beforeSubmission() == false">
+              <h3>Result</h3>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div data-bind="visible: beforeSubmission">
+              <div class="col-xs-3 col-xs-offset-5">
+              </div>
+                <div data-bind="foreach: myData()[index_of_dict()].options">
+                  <div class="inputGroup">
+                    <input id="radio1" type="radio" data-bind="checked: $parent.checkPre($data),click: $parent.setValue.bind(this, $data, $parent.index_of_dict()), attr: {'value': $data.data, name: $parent.myData()[$parent.index_of_dict()].question, id:$data.data}"/>
+                    <label data-bind="text: $data.data, attr:{'for':$data.data}"></label>
+                  </div>
+
+                </div>
+            </div>
+            <div data-bind="visible: beforeSubmission() == false" style="margin-left: 1%; margin-top: 1%">
+              <h4>Your score is <span data-bind="text: score"></span></h4>
+              <div class="progress">
+                <div class="progress-bar bg-success" role="progressbar" id="p1" aria-valuenow="80" style = "width: 0%"aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar bg-danger" role="progressbar" id="p2" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                  </div>
+                </div>
+              </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary mr-auto" data-bind="visible: index_of_dict() != 0  && beforeSubmission, click:indexDecrement">Back</button>
+        <button class="btn btn-primary" data-bind="visible: index_of_dict() != myData().length-1, click:indexIncrement">Next</button>
+        <button class="btn btn-primary" data-bind="visible: index_of_dict() == myData().length-1 && beforeSubmission, click:submitQuiz">Submit</button>
+      </div>
+    </div>
+  </div>
+
+    </div>
+  </div>
+</div>
+  
+  <script type = "text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+  <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
