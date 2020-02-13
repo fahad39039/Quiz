@@ -19,47 +19,16 @@ def hello():
 
 @app.route('/get_questions')
 def getQuestions():
-	dat = []
+	data = []
 	ques = session.query(Questions).all()
 	for x in ques:
 		opt = session.query(Options).filter(Options.question_id==x.id)
-		dat.append(
+		data.append(
 			{
 			'id': x.id,
 			'question':x.question,
 			'answer':x.answer,
 			'options':[{'data': op.option, 'ischecked': False, 'isCorrect':True if x.answer==op.option else False} for op in opt]})
-	data = [
-		{'question':'What is the colour of sky?',
-		'answer':'blue',
-		'options':[
-				{'data': 'white', 'ischecked':False, 'isCorrect': False},
-				{'data': 'black', 'ischecked':False, 'isCorrect': False}, 
-				{'data': 'green', 'ischecked':False, 'isCorrect': False}, 
-				{'data': 'blue', 'ischecked': False, 'isCorrect': True}
-				]
-		},
-		{'question':'What is the full form of HTML?',
-		'answer':'Hyper Text Markup Language',
-		'options':[
-				{'data': 'Hyper Tension Markup League', 'ischecked':False, 'isCorrect': False},
-				{'data': 'Hyper Text Machine Language', 'ischecked':False, 'isCorrect': False}, 
-				{'data': 'Hyper Text Markup Language', 'ischecked':False, 'isCorrect': True}, 
-				{'data': 'Hyper Transfer Machine Learning', 'ischecked': False, 'isCorrect': False}
-				]
-		},
-		{'question':'What is the colour of danger signal?',
-		'answer':'blue',
-		'options':[
-				{'data': 'white', 'ischecked':False, 'isCorrect': False},
-				{'data': 'black', 'ischecked':False, 'isCorrect': False}, 
-				{'data': 'red', 'ischecked':False, 'isCorrect': True}, 
-				{'data': 'blue', 'ischecked': False, 'isCorrect': False}
-				]
-		}
-	]
-			# {'question':'What is Delhi?','answer':'city','options':['city','state','country','continent']},
-			# {'question':'What is the full form of HTML?','answer':'Hyper Text Markup Language','options':['Hyper Text Machine Language','Hidden Text Machine Learning','Hyper Translated Markup Language','Hyper Transfer Middle Language']}]
 	return json.dumps(data)
 
 @app.route('/testing')
