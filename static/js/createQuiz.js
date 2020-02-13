@@ -1,5 +1,4 @@
 var ViewModel2 = function(){
-	
 	var self=this;
 	self.Question = ko.observable("");
 	self.Answer = ko.observable("");
@@ -9,8 +8,7 @@ var ViewModel2 = function(){
 	self.Option4 = ko.observable("");
 
 	self.submitQuestion = function(id){
-		console.log(id);
-		var dat = {
+		var add_dict = {
 			"Question": self.Question(),
 			"Answer": self.Answer(),
 			"Option1":self.Option1(),
@@ -22,7 +20,7 @@ var ViewModel2 = function(){
 		$.ajax({
 			url: "./createQuiz",
 			type: 'POST',
-			data: JSON.stringify(dat),
+			data: JSON.stringify(add_dict),
 			dataType: 'json',
 			contentType: 'application/json',
 			success: function(data){
@@ -42,8 +40,6 @@ var ViewModel2 = function(){
 			"Option4": document.getElementById('op4').value,
 		}
 
-		console.log(update_dict)
-
 		$.ajax({
 			url: "/updateQuiz/"+id,
 			type: 'POST',
@@ -57,6 +53,4 @@ var ViewModel2 = function(){
 		});
 	}
 }
-
-
 ko.applyBindings(new ViewModel2());
