@@ -1,0 +1,90 @@
+{% extends "root.html" %}
+{% block questions %}
+<style type="text/css">
+  .teal_color{
+  background-color: teal;
+  }
+  .teal_color:hover{
+  background-color: teal;
+</style>
+<div class="container">
+  <h5 class="m-5 font-weight-light">
+      {% if ques_info %}
+          Edit Question
+      {% else %}
+          Add new Question
+      {% endif %}
+  </h5>
+  <form class="form-horizontal">
+        <div class="form-group">
+          <div class="col-sm-8">
+            {% if ques_info %}
+              <input type="text" class="form-control" placeholder="Question" data-bind="attr:{'value':'{{ques_info.question}}'}" id=question>
+            {% else %}
+            <input type="text" class="form-control" placeholder="Question" data-bind="value:Question">
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-8">
+            {% if ques_info %}
+              <input type="text" class="form-control" placeholder="Answer" data-bind="attr:{'value':'{{ques_info.answer}}'}" id=answer>
+            {% else %}
+            <input type="text" class="form-control" placeholder="Answer"  data-bind="value:Answer">
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-5">
+            {% if options_info %}
+              <input type="text" class="form-control" placeholder="Option 1" data-bind="attr:{'value':'{{options_info[0].option}}'}" id=op1>
+            {% else %}
+              <input type="text" class="form-control" placeholder="Option 1" data-bind="value:Option1">
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-5"> 
+            {% if options_info %}
+              <input type="text" class="form-control" placeholder="Option 2" data-bind="attr:{'value':'{{options_info[1].option}}'}" id=op2>
+            {% else %}
+              <input type="text" class="form-control" placeholder="Option 2" data-bind="value:Option2">
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-5"> 
+            {% if options_info %}
+              <input type="text" class="form-control" placeholder="Option 3" data-bind="attr:{'value':'{{options_info[2].option}}'}" id=op3>
+            {% else %}
+              <input type="text" class="form-control" placeholder="Option 3" data-bind="value:Option3">
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-5"> 
+            {% if options_info %}
+              <input type="text" class="form-control" placeholder="Option 4" data-bind="attr:{'value':'{{options_info[3].option}}'}" id=op4>
+            {% else %}
+              <input type="text" class="form-control" placeholder="Option 4" data-bind="value:Option4">
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group"> 
+          <div class="col-sm-2 col-sm-10">
+            {% if ques_info %}
+            <button type="submit" class="btn btn-primary" data-bind="click:updateQuestion">Update</button>
+            {% else %}
+            <button type="submit" class="btn btn-primary" data-bind="click:submitQuestion">Submit</button>
+            {% endif %}
+          </div>
+        </div>
+      </form>
+</div>
+<script type="text/javascript">
+{% if id %}
+var id = {{id | safe}};
+{% endif %}
+</script>
+<script src="{{ url_for('static', filename='js/createQuiz.js') }}"></script>
+{% endblock %}
